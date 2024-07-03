@@ -1,19 +1,80 @@
+/* General settings */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(120deg, #2980b9, #6dd5fa, #ffffff);
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
     text-align: center;
-    margin-top: 50px;
 }
 
 h1 {
-    color: #333;
+    color: #2c3e50;
+    margin-bottom: 20px;
 }
 
 form {
     display: inline-block;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     margin-top: 20px;
 }
 
 label {
     display: block;
     margin: 10px 0;
+}
+
+select, button, input[type="radio"] {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #3498db;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+select:hover, button:hover, input[type="radio"]:hover {
+    background: #2980b9;
+}
+
+input[type="radio"] {
+    margin: 5px;
+}
+
+p {
+    font-size: 1.2em;
+}
+
+a {
+    text-decoration: none;
+    color: #3498db;
+    font-weight: bold;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+a:hover {
+    color: #2980b9;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+footer {
+    margin-top: 20px;
+    color: #666;
 }

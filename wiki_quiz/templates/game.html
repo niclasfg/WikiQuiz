@@ -5,16 +5,18 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Guess the missing word</h1>
-    <p>{{ question }}</p>
-    <form action="{{ url_for('check_answer') }}" method="post">
-        {% for choice in choices %}
-        <label>
-            <input type="radio" name="choice" value="{{ choice }}"> {{ choice }}
-        </label><br>
-        {% endfor %}
-        <button type="submit">Submit</button>
-    </form>
-    <p><a href="{{ url }}">Source</a></p>
+    <div class="container">
+        <h1>Guess the missing word</h1>
+        <p>{{ question }}</p>
+        <form action="{{ url_for('check_answer') }}" method="post">
+            {% for choice in choices %}
+            <label>
+                <input type="radio" name="choice" value="{{ choice }}"> {{ choice }}
+            </label><br>
+            {% endfor %}
+            <button type="submit">Submit</button>
+        </form>
+        <p><a href="{{ url }}">Source</a></p>
+    </div>
 </body>
 </html>

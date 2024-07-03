@@ -5,8 +5,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Game Over</h1>
-    <p>Your streak was: {{ streak }}</p>
-    <a href="{{ url_for('index') }}">Play Again</a>
+    <div class="container">
+        <h1>Game Over</h1>
+        <p>Your streak was: {{ streak }}</p>
+        <a href="{{ url_for('index') }}">Play Again</a>
+    </div>
 </body>
 </html>
