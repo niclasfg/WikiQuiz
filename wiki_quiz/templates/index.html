@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Game</title>
+    <title>Wiki Quiz Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Welcome to the Quiz Game!</h1>
-    <p>Fill in the blank with the correct word to earn points.</p>
-    <a href="{{ url_for('game') }}">Start Game</a>
+    <div class="container">
+        <h1>Wiki Quiz Game</h1>
+        <p>Test your knowledge with random Wikipedia facts!</p>
+        <a href="{{ url_for('game') }}" class="pulse">Start Game</a>
+    </div>
 </body>
 </html>

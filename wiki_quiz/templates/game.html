@@ -3,17 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Game</title>
+    <title>Wiki Quiz Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Quiz Game</h1>
-    <p>Current Score: {{ score }}</p>
-    <p>Article: {{ question['title'] }}</p>
-    <p>{{ question['statement'] }}</p>
-    <form method="POST">
-        <input type="text" name="answer" required>
-        <button type="submit">Submit</button>
-    </form>
+    <div class="container">
+        <h1>Wiki Quiz</h1>
+        <p class="score">Score: {{ score }}</p>
+        <p class="article-title">Article: {{ question['title'] }}</p>
+        <div class="question">
+            <p>{{ question['statement'] }}</p>
+        </div>
+        <form method="POST">
+            <input type="text" name="answer" required placeholder="Your answer...">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </body>
 </html>

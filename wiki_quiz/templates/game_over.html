@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Over</title>
+    <title>Game Over - Wiki Quiz Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Game Over</h1>
-    <p>Your final score: {{ score }}</p>
-    <a href="{{ url_for('index') }}">Play Again</a>
+    <div class="container">
+        <h1>Game Over</h1>
+        <p class="score">Your final score: {{ score }}</p>
+        <a href="{{ url_for('index') }}" class="pulse">Play Again</a>
+    </div>
 </body>
 </html>
