@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wiki Quiz Game</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Wiki Game</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Wiki Quiz Game</h1>
-        <p>Test your knowledge with random Wikipedia facts!</p>
-        <a href="{{ url_for('game') }}" class="pulse">Start Game</a>
-    </div>
+    <h1>Welcome to Wiki Game</h1>
+    <form action="{{ url_for('start_game') }}" method="post">
+        <label for="language">Select Language:</label>
+        <select name="language" id="language">
+            <option value="en">English</option>
+            <option value="sv">Swedish</option>
+            <option value="zh">Chinese</option>
+        </select>
+        <button type="submit">Start Game</button>
+    </form>
 </body>
 </html>

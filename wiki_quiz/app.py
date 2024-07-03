@@ -1,36 +1,86 @@
-from flask import Flask, render_template, request, session, redirect, url_for
-from question_generator import generate_question
+from flask import Flask, render_template, request, redirect, url_for, session
+import random
+import requests
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'  # Replace with a real secret key
+app.secret_key = 'your_secret_key'
+
+# Language mapping
+language_map = {
+    'en': 'en.wikipedia.org',
+    'sv': 'sv.wikipedia.org',
+    'zh': 'zh.wikipedia.org'
+}
+
+# Function to get a random Wikipedia statement
+def get_random_statement(language):
+    url = f'https://{language_map[language]}/wiki/Special:Random'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    paragraphs = soup.find_all('p')
+    
+    for paragraph in paragraphs:
+        if paragraph.text.strip():
+            return paragraph.text.strip(), url
+    return None, None
+
+# Function to create a quiz question
+def create_quiz_question(statement):
+    words = statement.split()
+    random_index = random.randint(0, len(words) - 1)
+    correct_word = words[random_index]
+    words[random_index] = '_____'
+    choices = [correct_word]
+    
+    while len(choices) < 4:
+        fake_word = random.choice(words)
+        if fake_word not in choices:
+            choices.append(fake_word)
+    
+    random.shuffle(choices)
+    return ' '.join(words), correct_word, choices
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route('/game', methods=['GET', 'POST'])
+@app.route('/start_game', methods=['POST'])
+def start_game():
+    session['language'] = request.form['language']
+    session['streak'] = 0
+    return redirect(url_for('game'))
+
+@app.route('/game')
 def game():
-    if 'score' not in session:
-        session['score'] = 0
-        session['current_question'] = generate_question()
+    language = session.get('language', 'en')
+    statement, url = get_random_statement(language)
+    if not statement:
+        return redirect(url_for('game_over'))
+    
+    question, correct_word, choices = create_quiz_question(statement)
+    session['correct_word'] = correct_word
+    session['question'] = question
+    session['choices'] = choices
+    session['url'] = url
+    
+    return render_template('game.html', question=question, choices=choices, url=url)
 
-    if request.method == 'POST':
-        user_answer = request.form.get('answer')
-        correct_answer = session['current_question']['answer']
-
-        if user_answer == correct_answer:
-            session['score'] += 1
-            session['current_question'] = generate_question()
-        else:
-            return redirect(url_for('game_over'))
-
-    return render_template('game.html', question=session['current_question'], score=session['score'])
+@app.route('/check_answer', methods=['POST'])
+def check_answer():
+    user_choice = request.form['choice']
+    correct_word = session.get('correct_word')
+    
+    if user_choice == correct_word:
+        session['streak'] += 1
+        return redirect(url_for('game'))
+    else:
+        return redirect(url_for('game_over'))
 
 @app.route('/game_over')
 def game_over():
-    final_score = session['score']
-    session.clear()
-    return render_template('game_over.html', score=final_score)
+    streak = session.get('streak', 0)
+    return render_template('game_over.html', streak=streak)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,29 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wiki Quiz Game</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Wiki Game</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Wiki Quiz</h1>
-        <p class="score">Score: {{ score }}</p>
-        <p class="article-title">Article: {{ question['title'] }}</p>
-        <div class="question">
-            <p>{{ question['statement'] }}</p>
-        </div>
-        <form method="POST">
-            {% for choice in question['choices'] %}
-            <div class="choice">
-                <input type="radio" id="choice{{ loop.index }}" name="answer" value="{{ choice }}" required>
-                <label for="choice{{ loop.index }}">{{ choice }}</label>
-            </div>
-            {% endfor %}
-            <button type="submit">Submit</button>
-        </form>
-    </div>
+    <h1>Guess the missing word</h1>
+    <p>{{ question }}</p>
+    <form action="{{ url_for('check_answer') }}" method="post">
+        {% for choice in choices %}
+        <label>
+            <input type="radio" name="choice" value="{{ choice }}"> {{ choice }}
+        </label><br>
+        {% endfor %}
+        <button type="submit">Submit</button>
+    </form>
+    <p><a href="{{ url }}">Source</a></p>
 </body>
 </html>
