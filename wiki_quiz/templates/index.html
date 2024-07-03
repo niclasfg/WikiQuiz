@@ -1,24 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Wiki Game</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wiki Quiz Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to Wiki Game</h1>
-        <form action="{{ url_for('start_game') }}" method="post">
-            <label for="language">Select Language:</label>
-            <select name="language" id="language">
-                <option value="en">English</option>
-                <option value="sv">Swedish</option>
-                <option value="zh">Chinese</option>
-            </select>
+        <h1>Wiki Quiz Game</h1>
+        <p>Select your preferred language:</p>
+        <form action="{{ url_for('set_language') }}" method="post">
+            {% for code, name in languages.items() %}
+            <div class="choice">
+                <input type="radio" id="lang_{{ code }}" name="language" value="{{ code }}" required>
+                <label for="lang_{{ code }}">{{ name }}</label>
+            </div>
+            {% endfor %}
             <button type="submit">Start Game</button>
         </form>
     </div>
-    <footer>
-        <p>© 2024 Wiki Game. All rights reserved.</p>
-    </footer>
 </body>
 </html>
