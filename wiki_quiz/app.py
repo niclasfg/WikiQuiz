@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 from question_generator import generate_question
-import random
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with a real secret key
@@ -16,8 +15,8 @@ def game():
         session['current_question'] = generate_question()
 
     if request.method == 'POST':
-        user_answer = request.form['answer'].strip().lower()
-        correct_answer = session['current_question']['answer'].lower()
+        user_answer = request.form.get('answer')
+        correct_answer = session['current_question']['answer']
 
         if user_answer == correct_answer:
             session['score'] += 1

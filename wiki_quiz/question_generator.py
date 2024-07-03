@@ -2,11 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 import random
 import nltk
-from nltk.tokenize import sent_tokenize, word_tokenize
-from nltk.tag import pos_tag
+from nltk.tokenize import word_tokenize
 
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
+nltk.download('punkt', quiet=True)
 
 def get_random_wikipedia_article():
     response = requests.get("https://en.wikipedia.org/wiki/Special:Random")
@@ -16,28 +14,31 @@ def get_random_wikipedia_article():
 def generate_question():
     title, paragraphs = get_random_wikipedia_article()
     
-    # Filter out short paragraphs and those with citations
     valid_paragraphs = [p.text for p in paragraphs if len(p.text.split()) > 20 and '[' not in p.text]
     
     if not valid_paragraphs:
         return generate_question()
     
     selected_paragraph = random.choice(valid_paragraphs)
-    sentences = sent_tokenize(selected_paragraph)
+    words = word_tokenize(selected_paragraph)
     
-    for sentence in sentences:
-        words = word_tokenize(sentence)
-        tagged_words = pos_tag(words)
-        
-        # Look for nouns or numbers to blank out
-        for i, (word, tag) in enumerate(tagged_words):
-            if tag.startswith('NN') or tag == 'CD':
-                blanked_sentence = " ".join(words[:i] + ["_____"] + words[i+1:])
-                return {
-                    "statement": blanked_sentence,
-                    "answer": word,
-                    "title": title
-                }
+    # Filter words: keep only alphanumeric words with length > 3
+    valid_words = [word for word in words if word.isalnum() and len(word) > 3]
     
-    # If no suitable sentence found, try again
-    return generate_question()
+    if len(valid_words) < 4:
+        return generate_question()
+    
+    correct_answer = random.choice(valid_words)
+    other_words = [word for word in valid_words if word.lower() != correct_answer.lower()]
+    
+    choices = random.sample(other_words, 3) + [correct_answer]
+    random.shuffle(choices)
+    
+    blanked_text = selected_paragraph.replace(correct_answer, "_____", 1)
+    
+    return {
+        "statement": blanked_text,
+        "choices": choices,
+        "answer": correct_answer,
+        "title": title
+    }

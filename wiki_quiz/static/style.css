@@ -8,8 +8,6 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-image: linear-gradient(45deg, #1a1a2e 25%, #16213e 25%, #16213e 50%, #1a1a2e 50%, #1a1a2e 75%, #16213e 75%, #16213e 100%);
-    background-size: 56.57px 56.57px;
 }
 
 .container {
@@ -26,8 +24,6 @@ h1 {
     color: #ff6b6b;
     font-size: 2.5rem;
     margin-bottom: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
 }
 
 p {
@@ -39,25 +35,39 @@ p {
     font-size: 1.5rem;
     color: #4ecdc4;
     font-weight: bold;
-    margin-bottom: 1rem;
 }
 
 .question {
-    background-color: #1a1a2e;
+    background-color: #16213e;
     padding: 1rem;
     border-radius: 10px;
     margin-bottom: 1rem;
 }
 
-input[type="text"] {
-    width: 100%;
-    padding: 0.8rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 5px;
+.choice {
+    margin-bottom: 10px;
+}
+
+.choice input[type="radio"] {
+    display: none;
+}
+
+.choice label {
+    display: block;
     background-color: #16213e;
-    color: #ffffff;
-    margin-bottom: 1rem;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.choice label:hover {
+    background-color: #1f2b4e;
+}
+
+.choice input[type="radio"]:checked + label {
+    background-color: #4ecdc4;
+    color: #1a1a2e;
 }
 
 button {
@@ -73,41 +83,4 @@ button {
 
 button:hover {
     background-color: #ff8e8e;
-}
-
-a {
-    display: inline-block;
-    margin-top: 1rem;
-    padding: 0.8rem 2rem;
-    background-color: #4ecdc4;
-    color: #ffffff;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-a:hover {
-    background-color: #45b7aa;
-}
-
-.article-title {
-    font-style: italic;
-    color: #fca311;
-    margin-bottom: 0.5rem;
-}
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-.pulse {
-    animation: pulse 2s infinite;
 }
