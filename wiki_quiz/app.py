@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for
-from questions import questions
+from question_generator import generate_question
 import random
 
 app = Flask(__name__)
@@ -13,7 +13,7 @@ def index():
 def game():
     if 'score' not in session:
         session['score'] = 0
-        session['current_question'] = random.choice(questions)
+        session['current_question'] = generate_question()
 
     if request.method == 'POST':
         user_answer = request.form['answer'].strip().lower()
@@ -21,7 +21,7 @@ def game():
 
         if user_answer == correct_answer:
             session['score'] += 1
-            session['current_question'] = random.choice(questions)
+            session['current_question'] = generate_question()
         else:
             return redirect(url_for('game_over'))
 

@@ -9,6 +9,7 @@
 <body>
     <h1>Quiz Game</h1>
     <p>Current Score: {{ score }}</p>
+    <p>Article: {{ question['title'] }}</p>
     <p>{{ question['statement'] }}</p>
     <form method="POST">
         <input type="text" name="answer" required>
